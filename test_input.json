@@ -1,0 +1,13 @@
+{
+  "input": {
+    "image": "<BASE64_ENCODED_IMAGE_HERE>",
+    "texture": true,
+    "remove_background": true,
+    "seed": 1234,
+    "octree_resolution": 256,
+    "num_inference_steps": 30,
+    "guidance_scale": 5.0,
+    "num_chunks": 8000,
+    "face_count": 40000
+  }
+}
