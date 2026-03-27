@@ -29,21 +29,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # =============================================================================
-# Miniconda + Python 3.10
+# Miniforge (conda-forge, no Anaconda TOS) + Python 3.10
 # =============================================================================
-RUN wget -q https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
-    bash Miniconda3-latest-Linux-x86_64.sh -b -p /workspace/miniconda3 && \
-    rm Miniconda3-latest-Linux-x86_64.sh
+RUN wget -q https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh && \
+    bash Miniforge3-Linux-x86_64.sh -b -p /workspace/miniforge3 && \
+    rm Miniforge3-Linux-x86_64.sh
 
-ENV PATH="/workspace/miniconda3/bin:${PATH}"
+ENV PATH="/workspace/miniforge3/bin:${PATH}"
 RUN conda create -n hunyuan3d python=3.10 -y
-ENV PATH="/workspace/miniconda3/envs/hunyuan3d/bin:${PATH}"
+ENV PATH="/workspace/miniforge3/envs/hunyuan3d/bin:${PATH}"
 ENV CONDA_DEFAULT_ENV=hunyuan3d
 
 # Build tools via conda
-RUN conda install -n hunyuan3d Ninja -y && \
+RUN conda install -n hunyuan3d ninja -y && \
     conda install -n hunyuan3d cuda -c nvidia/label/cuda-12.4.1 -y && \
-    conda install -n hunyuan3d -c conda-forge libstdcxx-ng -y
+    conda install -n hunyuan3d libstdcxx-ng -y
 
 # =============================================================================
 # PyTorch (CUDA 12.4)
