@@ -63,7 +63,7 @@ RUN sed -i '/^bpy/d; /^deepspeed/d' /workspace/Hunyuan3D-2.1/requirements.txt &&
 RUN cd /workspace/Hunyuan3D-2.1/hy3dpaint/custom_rasterizer && \
     TORCH_CUDA_ARCH_LIST="8.0;8.6;8.9;9.0" \
     CUDA_NVCC_FLAGS="-allow-unsupported-compiler" \
-    pip install -e .
+    pip install --no-build-isolation -e .
 
 RUN cd /workspace/Hunyuan3D-2.1/hy3dpaint/DifferentiableRenderer && \
     bash compile_mesh_painter.sh
