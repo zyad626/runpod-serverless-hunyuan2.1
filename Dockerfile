@@ -73,6 +73,10 @@ RUN mkdir -p /workspace/Hunyuan3D-2.1/hy3dpaint/ckpt && \
     wget -q https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth \
     -P /workspace/Hunyuan3D-2.1/hy3dpaint/ckpt/
 
+# Patch bpy import to be optional (not available as pip wheel, not needed for inference)
+RUN sed -i 's/^import bpy$/try:\n    import bpy\nexcept ImportError:\n    bpy = None/' \
+    /workspace/Hunyuan3D-2.1/hy3dpaint/DifferentiableRenderer/mesh_utils.py
+
 # Apply path fixes
 RUN cd /workspace/Hunyuan3D-2.1/hy3dpaint && \
     sed -i 's|self\.multiview_cfg_path = "cfgs/hunyuan-paint-pbr\.yaml"|self.multiview_cfg_path = "hy3dpaint/cfgs/hunyuan-paint-pbr.yaml"|' \
